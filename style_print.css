@@ -1,0 +1,135 @@
+@page {
+  margin: 14mm;
+}
+
+body {
+  background: #ffffff !important;
+  color: #000 !important;
+}
+
+.document {
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+}
+
+.back-to-top,
+.exportbar,
+.copybtn,
+.btnCapture,
+.btnClear,
+.proof-actions,
+.proofRemoveLink,
+.proofInsertLink {
+  display: none !important;
+}
+
+.course-banner,
+.document-hero,
+.document-overview,
+.part,
+.card,
+.course-footer {
+  box-shadow: none !important;
+}
+
+.proofEmpty {
+  display: none !important;
+}
+
+.proofImg {
+  display: block !important;
+  max-width: 100% !important;
+  height: auto !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 8px !important;
+}
+
+.proof-body {
+  border: 1px dashed #cbd5e1 !important;
+  border-radius: 8px !important;
+  padding: 3mm !important;
+  background: #fff !important;
+}
+
+.codewrap,
+.part,
+.proof,
+.resultblock,
+.card {
+  page-break-inside: avoid;
+}
+
+pre.shell,
+.resultpre,
+pre:not(.python-editor pre) {
+  white-space: pre-wrap !important;
+  word-break: break-word !important;
+  color: #000 !important;
+}
+
+.course-banner,
+.course-footer {
+  background: #ffffff !important;
+  color: #000 !important;
+  border-color: #cfd6df !important;
+}
+
+.document-hero {
+  background: #f1f5f9 !important;
+  color: #000 !important;
+  border-color: #d7e0e9 !important;
+}
+
+.document-title,
+.document-intro,
+.document-kicker,
+.banner-course-line,
+.banner-name,
+.banner-email,
+.banner-college-main,
+.banner-college-sub,
+.course-footer-left,
+.course-footer-right,
+.footer-author-link {
+  color: #000 !important;
+}
+
+.hero-image {
+  box-shadow: none !important;
+}
+
+
+.team-panel {
+  display: none !important;
+}
+
+.team-print-card {
+  display: block !important;
+  margin: 10px 0 14px;
+  padding: 10px 12px 12px;
+  border: 1px solid #cfd6df !important;
+  border-radius: 10px;
+  background: #ffffff !important;
+}
+
+.team-print-title {
+  margin: 0 0 8px;
+  font-weight: 700;
+  font-size: 11.5pt;
+}
+
+.team-print-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 18px;
+}
+
+.team-print-item {
+  font-size: 10.5pt;
+}
+
+.team-print-label {
+  font-weight: 700;
+}

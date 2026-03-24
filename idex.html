@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Labo-lecture - gestion des fichiers et dossiers en PowerShell</title>
+<link href="style.css" rel="stylesheet"/>
+<link href="style_print.css" media="print" rel="stylesheet"/>
+<script defer="" src="script.js"></script>
+</head>
+<body id="top">
+<a aria-label="Retour en haut" class="back-to-top" href="#top">↑</a>
+<main class="document">
+<header class="document-header">
+<section aria-label="En-tête du cours" class="course-banner">
+<div class="banner-left">
+<div class="banner-photo-wrap">
+<img alt="Anis Ghaieb" class="banner-photo" src="img/anis.png"/>
+</div>
+<div class="banner-left-info">
+<p class="banner-name">Anis Ghaieb</p>
+<p class="banner-email">baniss2002@gmail.com</p>
+</div>
+</div>
+<div class="banner-center">
+<p class="banner-course">
+<span class="banner-course-line">Automatisation et scripts </span>
+
+</p>
+</div>
+<div class="banner-right">
+<img alt="Collège Universel" class="banner-logo" src="img/college.png"/>
+<p class="banner-college">
+<span class="banner-college-main">Collège Universel</span>
+<span class="banner-college-sub">Campus Montréal</span>
+</p>
+</div>
+</section><section aria-label="Équipe" class="team-panel"><div class="team-panel-head"><h2 class="team-panel-title">Equipe</h2></div><div class="team-grid"><label class="team-field" for="teamMember1"><span class="team-label">Nom1 :</span><input autocomplete="off" class="team-member-input" id="teamMember1" placeholder="Nom de l’étudiant 1" type="text"/></label><label class="team-field" for="teamMember2"><span class="team-label">Nom2 :</span><input autocomplete="off" class="team-member-input" id="teamMember2" placeholder="Nom de l’étudiant 2" type="text"/></label><label class="team-field" for="teamMember3"><span class="team-label">Nom3 :</span><input autocomplete="off" class="team-member-input" id="teamMember3" placeholder="Nom de l’étudiant 3" type="text"/></label><label class="team-field" for="teamMember4"><span class="team-label">Nom4 :</span><input autocomplete="off" class="team-member-input" id="teamMember4" placeholder="Nom de l’étudiant 4" type="text"/></label></div></section><div aria-hidden="true" class="team-print-card" id="teamPrint"></div>
+<div class="document-hero">
+<figure class="content-figure hero-figure">
+<img alt="chap.png" class="content-image hero-image" src="img/chap.png"/>
+</figure>
+<p class="document-kicker">automatisation et scripts — mise en pratique guidée</p>
+<h1 class="document-title">Labo-lecture : gestion des fichiers et dossiers en PowerShell</h1>
+<p class="document-intro">
+          Dans ce labo-lecture, vous allez reprendre les notions de la leçon et les exécuter vous-même dans un dossier de travail sécurisé. Le but est de manipuler les cmdlets de base pour créer, lister, renommer, copier, déplacer et supprimer des dossiers et des fichiers, puis d’aller plus loin avec la recherche, le filtrage, le tri, la détection de doublons, le rangement automatique par type et la consultation des permissions. Chaque commande doit être tapée sur votre propre machine, puis vérifiée par une capture lorsque c’est demandé. Les chemins proposés sont des exemples sûrs dans votre profil Windows. Adaptez seulement le nom d’utilisateur affiché dans le prompt si le vôtre est différent.
+        </p>
+</div>
+<section aria-label="Vue d’ensemble du labo" class="document-overview">
+<div class="overview-panel">
+<h2 class="overview-title">table des matières</h2>
+<nav aria-label="Table des matières du labo" class="toc-nav">
+<ul class="toc-list">
+<li class="toc-item toc-level-1"><a class="toc-link" href="#partie-1">Partie 1 — préparation du dossier de travail</a>
+<ul class="toc-sublist">
+<li class="toc-item toc-level-2"><a class="toc-link" href="#p1-s1">Consignes générales</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#p1-s2">Création de l’environnement de labo</a></li>
+</ul>
+</li>
+<li class="toc-item toc-level-1"><a class="toc-link" href="#partie-2">Partie 2 — gestion des dossiers</a>
+<ul class="toc-sublist">
+<li class="toc-item toc-level-2"><a class="toc-link" href="#p2-s1">Créer, lister et renommer</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#p2-s2">Copier, déplacer et supprimer</a></li>
+</ul>
+</li>
+<li class="toc-item toc-level-1"><a class="toc-link" href="#partie-3">Partie 3 — gestion des fichiers</a>
+<ul class="toc-sublist">
+<li class="toc-item toc-level-2"><a class="toc-link" href="#p3-s1">Créer, vérifier et lister</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#p3-s2">Lire, écrire, copier, déplacer et supprimer</a></li>
+</ul>
+</li>
+<li class="toc-item toc-level-1"><a class="toc-link" href="#partie-4">Partie 4 — recherche, filtrage et tri</a>
+<ul class="toc-sublist">
+<li class="toc-item toc-level-2"><a class="toc-link" href="#p4-s1">Recherche par nom et extension</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#p4-s2">Filtrage par taille, date et tri</a></li>
+</ul>
+</li>
+<li class="toc-item toc-level-1"><a class="toc-link" href="#partie-5">Partie 5 — détection de doublons</a></li>
+<li class="toc-item toc-level-1"><a class="toc-link" href="#partie-6">Partie 6 — rangement automatique par type</a></li>
+<li class="toc-item toc-level-1"><a class="toc-link" href="#partie-7">Partie 7 — permissions et ACL</a></li>
+<li class="toc-item toc-level-1"><a class="toc-link" href="#partie-8">Partie 8 — bilan final</a></li>
+<li class="toc-item toc-level-1"><a class="toc-link" href="#export">Exportation en PDF</a></li>
+</ul>
+</nav>
+</div>
+<div class="overview-panel">
+<h2 class="overview-title">objectifs de la leçon</h2>
+<ul class="goal-list">
+<li>Créer un environnement de travail propre pour manipuler les fichiers et les dossiers sans risque.</li>
+<li>Appliquer les cmdlets PowerShell vues dans la leçon pour gérer les répertoires et les fichiers.</li>
+<li>Utiliser la recherche, le filtrage et le tri pour retrouver rapidement des éléments utiles.</li>
+<li>Tester des scénarios avancés : doublons, rangement automatique et consultation des permissions.</li>
+<li>Conserver des preuves visuelles claires et préparer un PDF final propre à remettre.</li>
+</ul>
+</div>
+</section>
+</header>
+<section class="part" id="partie-1">
+<div class="part-header">
+<h2 class="part-title">Partie 1 — préparation du dossier de travail</h2>
+</div>
+<div class="part-body">
+<div class="section-block line-section">
+<h3 class="section-title" id="p1-s1">Consignes générales</h3>
+<div class="section-body">
+<p>Travaillez dans un dossier de labo dédié. N’exécutez pas les commandes de suppression sur vos vrais documents. Le prompt affiché dans les exemples utilise le nom <strong>anis</strong> uniquement comme modèle. Sur votre poste, le prompt peut afficher un autre nom d’utilisateur et un autre chemin : c’est normal.</p>
+<div class="callout spaced-block">
+<strong>Rappel :</strong> dans ce labo, l’ordre attendu est toujours : lire la consigne, taper la commande, vérifier le résultat, puis insérer la capture demandée.
+            </div>
+<div class="callout spaced-block">
+<strong>Rappel :</strong> si vous utilisez PowerShell 7 ou Windows PowerShell 5.1, le prompt peut varier légèrement. Ce n’est pas un problème tant que la commande et son résultat sont corrects.
+            </div>
+</div>
+</div>
+<div class="section-block line-section">
+<h3 class="section-title" id="p1-s2">Création de l’environnement de labo</h3>
+<div class="section-body">
+<p>Commencez par créer un dossier racine <strong>PS_Cours7_Lab</strong> dans votre dossier Documents, puis les sous-dossiers qui serviront à chaque partie du labo.</p>
+<div class="codewrap">
+<div class="codebar">
+<span class="codelabel">Commande à taper</span>
+<button class="copybtn" data-copy-target="p1-cmd1" type="button">Copier</button>
+</div>
+<pre class="shell" id="p1-cmd1"><span class="prompt">PS C:\Users\anis&gt;</span> $lab = "$env:USERPROFILE\Documents\PS_Cours7_Lab"
+New-Item -Path $lab -ItemType Directory -Force
+New-Item -Path "$lab\01_Dossiers" -ItemType Directory -Force
+New-Item -Path "$lab\02_Fichiers" -ItemType Directory -Force
+New-Item -Path "$lab\03_Recherche" -ItemType Directory -Force
+New-Item -Path "$lab\04_Doublons" -ItemType Directory -Force
+New-Item -Path "$lab\05_ACL" -ItemType Directory -Force
+New-Item -Path "$lab\06_A_organiser" -ItemType Directory -Force
+Get-ChildItem -Path $lab</pre>
+</div>
+<div class="resultblock">
+<div aria-label="Affichage sur écran" class="pcframe screen-m">
+<img alt="Écran PC" src="img/pc.png"/>
+<div class="pcinner">
+<pre class="shell resultpre" id="p1-out1">Mode   LastWriteTime         Length Name
+----   -------------         ------ ----
+d----- 2026-03-17 09:00             01_Dossiers
+d----- 2026-03-17 09:00             02_Fichiers
+d----- 2026-03-17 09:00             03_Recherche
+d----- 2026-03-17 09:00             04_Doublons
+d----- 2026-03-17 09:00             05_ACL
+d----- 2026-03-17 09:00             06_A_organiser</pre>
+</div>
+</div>
+</div>
+<div class="proof callout spaced-block" data-proof-id="p1-s2-proof">
+<div class="proof-head">
+<div>
+<strong>Capture obligatoire :</strong> montrez la fenêtre PowerShell avec la liste des six sous-dossiers créés dans <strong>PS_Cours7_Lab</strong>.
+                </div>
+</div>
+<div class="proof-body" tabindex="0" title="Cliquez ici puis collez une image depuis le presse-papiers avec Ctrl+V"><div class="proofEmpty"><button class="btnCapture proofInsertLink" type="button">Insérer</button> ici la capture de la liste des six sous-dossiers créés dans PS_Cours7_Lab.<div class="proofPasteHint">ou collez une image enregistrée dans le presse-papiers avec Ctrl+V.</div></div><img alt="Capture de l’étudiant" class="proofImg"/><input accept="image/*" class="proofFile" hidden="" type="file"/><div class="proofBodyActions"><button class="btnClear proofRemoveLink" type="button">retirer la capture</button></div></div>
+</div>
+<div class="callout spaced-block">
+<strong>À saisir :</strong> expliquez en 3 à 4 lignes pourquoi il est utile de travailler dans un dossier de labo séparé avant de tester des commandes de suppression.
+              <div class="answer-area">
+<textarea class="team-input answerbox-large" id="p1-obs1" placeholder="Écris ici ta réponse..."></textarea>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="part" id="partie-2">
+<div class="part-header">
+<h2 class="part-title">Partie 2 — gestion des dossiers</h2>
+</div>
+<div class="part-body">
+<div class="section-block line-section">
+<h3 class="section-title" id="p2-s1">Créer, lister et renommer</h3>
+<div class="section-body">
+<p>Dans cette partie, vous allez reproduire les opérations de base sur les répertoires : création, listing et renommage.</p>
+<div class="codewrap">
+<div class="codebar">
+<span class="codelabel">Commande à taper</span>
+<button class="copybtn" data-copy-target="p2-cmd1" type="button">Copier</button>
+</div>
+<pre class="shell" id="p2-cmd1"><span class="prompt">PS C:\Users\anis&gt;</span> $d = "$env:USERPROFILE\Documents\PS_Cours7_Lab\01_Dossiers"
+New-Item -Path $d -Name "Logfiles" -ItemType Directory
+New-Item -Path $d -Name "MesImages" -ItemType Directory
+New-Item -Path $d -Name "PDF" -ItemType Directory
+Get-ChildItem -Path $d -Directory
+Rename-Item -Path "$d\MesImages" -NewName "PhotosVacances"
+Get-ChildItem -Path $d -Directory</pre>
+</div>
+<div class="resultblock">
+<div aria-label="Affichage sur écran" class="pcframe screen-m">
+<img alt="Écran PC" src="img/pc.png"/>
+<div class="pcinner">
+<pre class="shell resultpre" id="p2-out1">Mode   LastWriteTime         Length Name
+----   -------------         ------ ----
+d----- 2026-03-17 09:05             Logfiles
+d----- 2026-03-17 09:05             PDF
+d----- 2026-03-17 09:05             PhotosVacances</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section-block line-section">
+<h3 class="section-title" id="p2-s2">Copier, déplacer et supprimer</h3>
+<div class="section-body">
+<p>Nous allons maintenant préparer quelques dossiers de test pour vérifier les opérations de copie, de déplacement et de suppression.</p>
+<div class="subsection-block">
+<h4 class="subsection-title">Préparer les dossiers de test</h4>
+<div class="subsection-body">
+<div class="codewrap">
+<div class="codebar">
+<span class="codelabel">Commande à taper</span>
+<button class="copybtn" data-copy-target="p2-cmd2" type="button">Copier</button>
+</div>
+<pre class="shell" id="p2-cmd2"><span class="prompt">PS C:\Users\anis&gt;</span> New-Item -Path "$d\Source" -ItemType Directory -Force
+New-Item -Path "$d\Source\MonDossier" -ItemType Directory -Force
+New-Item -Path "$d\Docs" -ItemType Directory -Force
+New-Item -Path "$d\Docs\Rapports" -ItemType Directory -Force
+New-Item -Path "$d\Docs\Rapports\rapport1.txt" -ItemType File -Force
+New-Item -Path "$d\Word" -ItemType Directory -Force
+New-Item -Path "$d\Word\essai.txt" -ItemType File -Force</pre>
+</div>
+</div>
+</div>
+<div class="subsection-block">
+<h4 class="subsection-title">Copier et déplacer</h4>
+<div class="subsection-body">
+<div class="codewrap">
+<div class="codebar">
+<span class="codelabel">Commande à taper</span>
+<button class="copybtn" data-copy-target="p2-cmd3" type="button">Copier</button>
+</div>
+<pre class="shell" id="p2-cmd3"><span class="prompt">PS C:\Users\anis&gt;</span> Copy-Item -Path "$d\Docs\Rapports" -Destination "$d\Backup\RapportsCopy" -Recurse -Force
+Move-Item -Path "$d\Source\MonDossier" -Destination "$d\Cible"
+Get-ChildItem -Path "$d" -Directory</pre>
+</div>
+</div>
+</div>
+<div class="subsection-block">
+<h4 class="subsection-title">Supprimer en sécurité</h4>
+<div class="subsection-body">
+<p>Simulez d’abord la suppression, puis exécutez-la réellement.</p>
+<div class="codewrap">
+<div class="codebar">
+<span class="codelabel">Commande à taper</span>
+<button class="copybtn" data-copy-target="p2-cmd4" type="button">Copier</button>
+</div>
+<pre class="shell" id="p2-cmd4"><span class="prompt">PS C:\Users\anis&gt;</span> Remove-Item -Path "$d\Word" -Recurse -Force -WhatIf
+Remove-Item -Path "$d\Word" -Recurse -Force
+Get-ChildItem -Path "$d" -Directory</pre>
+</div>
+</div>
+</div>
+<div class="proof callout spaced-block" data-proof-id="p2-s2-proof">
+<div class="proof-head">
+<div>
+<strong>Capture obligatoire :</strong> montrez la structure du dossier <strong>01_Dossiers</strong> après la copie, le déplacement et la suppression du dossier <strong>Word</strong>.
+                </div>
+</div>
+<div class="proof-body" tabindex="0" title="Cliquez ici puis collez une image depuis le presse-papiers avec Ctrl+V"><div class="proofEmpty"><button class="btnCapture proofInsertLink" type="button">Insérer</button> ici la capture de la structure du dossier 01_Dossiers après la copie, le déplacement et la suppression du dossier Word.<div class="proofPasteHint">ou collez une image enregistrée dans le presse-papiers avec Ctrl+V.</div></div><img alt="Capture de l’étudiant" class="proofImg"/><input accept="image/*" class="proofFile" hidden="" type="file"/><div class="proofBodyActions"><button class="btnClear proofRemoveLink" type="button">retirer la capture</button></div></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="part" id="partie-3">
+<div class="part-header">
+<h2 class="part-title">Partie 3 — gestion des fichiers</h2>
+</div>
+<div class="part-body">
+<div class="section-block line-section">
+<h3 class="section-title" id="p3-s1">Créer, vérifier et lister</h3>
+<div class="section-body">
+<div class="codewrap">
+<div class="codebar">
+<span class="codelabel">Commande à taper</span>
+<button class="copybtn" data-copy-target="p3-cmd1" type="button">Copier</button>
+</div>
+<pre class="shell" id="p3-cmd1"><span class="prompt">PS C:\Users\anis&gt;</span> $f = "$env:USERPROFILE\Documents\PS_Cours7_Lab\02_Fichiers"
+New-Item -Path $f -Name "journal.txt" -ItemType File -Force
+Test-Path "$f\journal.txt"
+Get-ChildItem -Path $f -File</pre>
+</div>
+</div>
+</div>
+<div class="section-block line-section">
+<h3 class="section-title" id="p3-s2">Lire, écrire, copier, déplacer et supprimer</h3>
+<div class="section-body">
+<div class="subsection-block">
+<h4 class="subsection-title">Écrire puis lire le contenu</h4>
+<div class="subsection-body">
+<div class="codewrap">
+<div class="codebar">
+<span class="codelabel">Commande à taper</span>
+<button class="copybtn" data-copy-target="p3-cmd2" type="button">Copier</button>
+</div>
+<pre class="shell" id="p3-cmd2"><span class="prompt">PS C:\Users\anis&gt;</span> Set-Content -Path "$f\journal.txt" -Value "Ligne 1`r`nLigne 2"
+Add-Content -Path "$f\journal.txt" -Value "Nouvelle entrée le $(Get-Date)"
+Get-Content -Path "$f\journal.txt"</pre>
+</div>
+</div>
+</div>
+<div class="subsection-block">
+<h4 class="subsection-title">Créer d’autres fichiers utiles</h4>
+<div class="subsection-body">
+<div class="codewrap">
+<div class="codebar">
+<span class="codelabel">Commande à taper</span>
+<button class="copybtn" data-copy-target="p3-cmd3" type="button">Copier</button>
+</div>
+<pre class="shell" id="p3-cmd3"><span class="prompt">PS C:\Users\anis&gt;</span> New-Item -Path "$f\ancien_nom.txt" -ItemType File -Force
+Rename-Item "$f\ancien_nom.txt" -NewName "nouveau_nom.txt"
+Copy-Item "$f\nouveau_nom.txt" -Destination "$f\copie_nouveau_nom.txt"
+Move-Item "$f\copie_nouveau_nom.txt" -Destination "$f\Archives\copie_nouveau_nom.txt" -Force
+Get-Process | Out-File -FilePath "$f\processus.txt"
+Remove-Item "$f\nouveau_nom.txt"
+Get-ChildItem -Path $f -Recurse</pre>
+</div>
+</div>
+</div>
+<div class="proof callout spaced-block" data-proof-id="p3-s2-proof">
+<div class="proof-head">
+<div>
+<strong>Capture obligatoire :</strong> montrez le contenu de <strong>journal.txt</strong> puis, dans la même capture ou dans la même fenêtre, la liste des fichiers du dossier <strong>02_Fichiers</strong> après les opérations.
+                </div>
+</div>
+<div class="proof-body" tabindex="0" title="Cliquez ici puis collez une image depuis le presse-papiers avec Ctrl+V"><div class="proofEmpty"><button class="btnCapture proofInsertLink" type="button">Insérer</button> ici la capture de journal.txt et la liste finale des fichiers du dossier 02_Fichiers.<div class="proofPasteHint">ou collez une image enregistrée dans le presse-papiers avec Ctrl+V.</div></div><img alt="Capture de l’étudiant" class="proofImg"/><input accept="image/*" class="proofFile" hidden="" type="file"/><div class="proofBodyActions"><button class="btnClear proofRemoveLink" type="button">retirer la capture</button></div></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="part" id="partie-4">
+<div class="part-header">
+<h2 class="part-title">Partie 4 — recherche, filtrage et tri</h2>
+</div>
+<div class="part-body">
+<div class="section-block line-section">
+<h3 class="section-title" id="p4-s1">Recherche par nom et extension</h3>
+<div class="section-body">
+<p>Préparez quelques fichiers de test dans le dossier <strong>03_Recherche</strong> puis effectuez les recherches demandées.</p>
+<div class="codewrap">
+<div class="codebar">
+<span class="codelabel">Commande à taper</span>
+<button class="copybtn" data-copy-target="p4-cmd1" type="button">Copier</button>
+</div>
+<pre class="shell" id="p4-cmd1"><span class="prompt">PS C:\Users\anis&gt;</span> $r = "$env:USERPROFILE\Documents\PS_Cours7_Lab\03_Recherche"
+New-Item -Path "$r\rapport_2023_01.docx" -ItemType File -Force
+New-Item -Path "$r\rapport_final.pdf" -ItemType File -Force
+New-Item -Path "$r\trace1.log" -ItemType File -Force
+New-Item -Path "$r\trace2.log" -ItemType File -Force
+New-Item -Path "$r\Images" -ItemType Directory -Force
+New-Item -Path "$r\Images\photo.png" -ItemType File -Force
+Get-ChildItem -Path $r -Filter "*.log" -Recurse
+Get-ChildItem -Path $r -File -Recurse | Where-Object { $_.Name -like "*rapport*" }</pre>
+</div>
+</div>
+</div>
+<div class="section-block line-section">
+<h3 class="section-title" id="p4-s2">Filtrage par taille, date et tri</h3>
+<div class="section-body">
+<div class="subsection-block">
+<h4 class="subsection-title">Créer des tailles différentes</h4>
+<div class="subsection-body">
+<div class="codewrap">
+<div class="codebar">
+<span class="codelabel">Commande à taper</span>
+<button class="copybtn" data-copy-target="p4-cmd2" type="button">Copier</button>
+</div>
+<pre class="shell" id="p4-cmd2"><span class="prompt">PS C:\Users\anis&gt;</span> Set-Content -Path "$r\petit.log" -Value ("A" * 100)
+Set-Content -Path "$r\moyen.log" -Value ("B" * 2000)
+Set-Content -Path "$r\grand.log" -Value ("C" * 5000)
+(Get-Item "$r\petit.log").LastWriteTime = (Get-Date).AddDays(-40)
+Get-ChildItem "$r" -File -Recurse | Where-Object { $_.Length -gt 1KB }
+$limite = (Get-Date).AddDays(-30)
+Get-ChildItem "$r" -File -Recurse | Where-Object { $_.LastWriteTime -lt $limite }
+Get-ChildItem "$r" -File -Recurse | Sort-Object Length -Descending | Select-Object -First 5 FullName, Length
+Get-ChildItem $r | Get-Member</pre>
+</div>
+</div>
+</div>
+<div class="proof callout spaced-block" data-proof-id="p4-s2-proof">
+<div class="proof-head">
+<div>
+<strong>Capture obligatoire :</strong> montrez les résultats du filtre sur les fichiers de plus de 1 Ko, puis le tri décroissant par taille dans le dossier <strong>03_Recherche</strong>.
+                </div>
+</div>
+<div class="proof-body" tabindex="0" title="Cliquez ici puis collez une image depuis le presse-papiers avec Ctrl+V"><div class="proofEmpty"><button class="btnCapture proofInsertLink" type="button">Insérer</button> ici la capture de votre filtre sur les fichiers de plus de 1 Ko et le tri décroissant par taille.<div class="proofPasteHint">ou collez une image enregistrée dans le presse-papiers avec Ctrl+V.</div></div><img alt="Capture de l’étudiant" class="proofImg"/><input accept="image/*" class="proofFile" hidden="" type="file"/><div class="proofBodyActions"><button class="btnClear proofRemoveLink" type="button">retirer la capture</button></div></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="part" id="partie-5">
+<div class="part-header">
+<h2 class="part-title">Partie 5 — détection de doublons</h2>
+</div>
+<div class="part-body">
+<div class="section-block line-section">
+<h3 class="section-title" id="p5-s1">Créer, repérer et simuler la suppression des doublons</h3>
+<div class="section-body">
+<p>Dans cette partie, vous allez créer volontairement plusieurs fichiers identiques, calculer leur hash, regrouper les doublons et simuler leur suppression avec <strong>-WhatIf</strong>.</p>
+<div class="codewrap">
+<div class="codebar">
+<span class="codelabel">Commande à taper</span>
+<button class="copybtn" data-copy-target="p5-cmd1" type="button">Copier</button>
+</div>
+<pre class="shell" id="p5-cmd1"><span class="prompt">PS C:\Users\anis&gt;</span> $dup = "$env:USERPROFILE\Documents\PS_Cours7_Lab\04_Doublons"
+Set-Content -Path "$dup\original.txt" -Value "même contenu"
+Copy-Item "$dup\original.txt" "$dup\copie1.txt" -Force
+Copy-Item "$dup\original.txt" "$dup\copie2.txt" -Force
+$doublons = Get-ChildItem "$dup" -File -Recurse | Get-FileHash |
+ Group-Object -Property Hash | Where-Object { $_.Count -gt 1 }
+foreach($grp in $doublons) {
+    Write-Host "Doublons trouvés (Hash $($grp.Name)) :"
+    $grp.Group | ForEach-Object { Write-Host " $($_.Path)" }
+}
+Get-ChildItem "$dup" -File -Recurse | Get-FileHash |
+ Group-Object Hash | Where-Object { $_.Count -gt 1 } |
+ % { $_.Group } | Out-File -FilePath "$dup\Duplicates.txt"
+Get-ChildItem "$dup" -File -Recurse | Get-FileHash |
+ Group-Object Hash | Where-Object { $_.Count -gt 1 } |
+ ForEach-Object {
+    $_.Group | Select-Object -Skip 1 | Remove-Item -WhatIf
+ }</pre>
+</div>
+<div class="proof callout spaced-block" data-proof-id="p5-s1-proof">
+<div class="proof-head">
+<div>
+<strong>Capture obligatoire :</strong> montrez la console avec les doublons détectés et la simulation <strong>-WhatIf</strong> de suppression.
+                </div>
+</div>
+<div class="proof-body" tabindex="0" title="Cliquez ici puis collez une image depuis le presse-papiers avec Ctrl+V"><div class="proofEmpty"><button class="btnCapture proofInsertLink" type="button">Insérer</button> ici la capture de la console montrant les doublons détectés et la simulation -WhatIf.<div class="proofPasteHint">ou collez une image enregistrée dans le presse-papiers avec Ctrl+V.</div></div><img alt="Capture de l’étudiant" class="proofImg"/><input accept="image/*" class="proofFile" hidden="" type="file"/><div class="proofBodyActions"><button class="btnClear proofRemoveLink" type="button">retirer la capture</button></div></div>
+</div>
+<div class="callout spaced-block">
+<strong>À saisir :</strong> expliquez pourquoi la détection par <strong>hash</strong> est plus fiable qu’une simple comparaison du nom du fichier.
+              <div class="answer-area">
+<textarea class="team-input answerbox-large" id="p5-obs1" placeholder="Écris ici ta réponse..."></textarea>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="part" id="partie-6">
+<div class="part-header">
+<h2 class="part-title">Partie 6 — rangement automatique par type</h2>
+</div>
+<div class="part-body">
+<div class="section-block line-section">
+<h3 class="section-title" id="p6-s1">Exécuter un script d’organisation automatique</h3>
+<div class="section-body">
+<p>Vous allez préparer un petit dossier désordonné, puis lancer un script PowerShell qui classe automatiquement les fichiers selon leur extension.</p>
+<div class="subsection-block">
+<h4 class="subsection-title">Préparer les fichiers à ranger</h4>
+<div class="subsection-body">
+<div class="codewrap">
+<div class="codebar">
+<span class="codelabel">Commande à taper</span>
+<button class="copybtn" data-copy-target="p6-cmd1" type="button">Copier</button>
+</div>
+<pre class="shell" id="p6-cmd1"><span class="prompt">PS C:\Users\anis&gt;</span> $org = "$env:USERPROFILE\Documents\PS_Cours7_Lab\06_A_organiser"
+New-Item -Path "$org\facture.pdf" -ItemType File -Force
+New-Item -Path "$org\photo.jpg" -ItemType File -Force
+New-Item -Path "$org\notes.txt" -ItemType File -Force
+New-Item -Path "$org\rapport.docx" -ItemType File -Force</pre>
+</div>
+</div>
+</div>
+<div class="subsection-block">
+<h4 class="subsection-title">Lancer le script de rangement</h4>
+<div class="subsection-body">
+<div class="codewrap">
+<div class="codebar">
+<span class="codelabel">Commande à taper</span>
+<button class="copybtn" data-copy-target="p6-cmd2" type="button">Copier</button>
+</div>
+<pre class="shell" id="p6-cmd2"><span class="prompt">PS C:\Users\anis&gt;</span> $TargetFolder = "$env:USERPROFILE\Documents\PS_Cours7_Lab\06_A_organiser"
+Set-Location -Path $TargetFolder
+$files = Get-ChildItem -File
+foreach ($file in $files) {
+    $ext = $file.Extension.TrimStart('.').ToLower()
+    if ($ext -eq "") {
+        continue
+    }
+    $destFolder = Join-Path $TargetFolder $ext
+    if (!(Test-Path $destFolder)) {
+        New-Item -Path $destFolder -ItemType Directory | Out-Null
+    }
+    Move-Item -Path $file.FullName -Destination $destFolder
+}
+Get-ChildItem -Path $TargetFolder -Recurse</pre>
+</div>
+</div>
+</div>
+<div class="proof callout spaced-block" data-proof-id="p6-s1-proof">
+<div class="proof-head">
+<div>
+<strong>Capture obligatoire :</strong> montrez la structure finale du dossier <strong>06_A_organiser</strong> avec les sous-dossiers <strong>pdf</strong>, <strong>jpg</strong>, <strong>txt</strong> et <strong>docx</strong>.
+                </div>
+</div>
+<div class="proof-body" tabindex="0" title="Cliquez ici puis collez une image depuis le presse-papiers avec Ctrl+V"><div class="proofEmpty"><button class="btnCapture proofInsertLink" type="button">Insérer</button> ici la capture de la structure finale du dossier 06_A_organiser avec les sous-dossiers pdf, jpg, txt et docx.<div class="proofPasteHint">ou collez une image enregistrée dans le presse-papiers avec Ctrl+V.</div></div><img alt="Capture de l’étudiant" class="proofImg"/><input accept="image/*" class="proofFile" hidden="" type="file"/><div class="proofBodyActions"><button class="btnClear proofRemoveLink" type="button">retirer la capture</button></div></div>
+</div>
+<div class="callout spaced-block">
+<strong>À saisir :</strong> proposez une amélioration simple pour éviter l’écrasement d’un fichier si deux fichiers de même nom arrivent dans le même dossier de destination.
+              <div class="answer-area">
+<textarea class="team-input answerbox-large" id="p6-obs1" placeholder="Écris ici ta réponse..."></textarea>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="part" id="partie-7">
+<div class="part-header">
+<h2 class="part-title">Partie 7 — permissions et ACL</h2>
+</div>
+<div class="part-body">
+<div class="section-block line-section">
+<h3 class="section-title" id="p7-s1">Consulter et recopier des ACL</h3>
+<div class="section-body">
+<p>Cette partie reprend la logique de la leçon sur <strong>Get-Acl</strong> et <strong>Set-Acl</strong>. Travaillez uniquement dans votre dossier de labo.</p>
+<div class="subsection-block">
+<h4 class="subsection-title">Préparer les éléments de test</h4>
+<div class="subsection-body">
+<div class="codewrap">
+<div class="codebar">
+<span class="codelabel">Commande à taper</span>
+<button class="copybtn" data-copy-target="p7-cmd1" type="button">Copier</button>
+</div>
+<pre class="shell" id="p7-cmd1"><span class="prompt">PS C:\Users\anis&gt;</span> $aclPath = "$env:USERPROFILE\Documents\PS_Cours7_Lab\05_ACL"
+New-Item -Path "$aclPath\Docs" -ItemType Directory -Force
+New-Item -Path "$aclPath\Dog.txt" -ItemType File -Force
+New-Item -Path "$aclPath\Cat.txt" -ItemType File -Force
+Get-Acl -Path "$aclPath\Docs" | Format-List</pre>
+</div>
+</div>
+</div>
+<div class="subsection-block">
+<h4 class="subsection-title">Copier les permissions d’un fichier vers un autre</h4>
+<div class="subsection-body">
+<div class="codewrap">
+<div class="codebar">
+<span class="codelabel">Commande à taper</span>
+<button class="copybtn" data-copy-target="p7-cmd2" type="button">Copier</button>
+</div>
+<pre class="shell" id="p7-cmd2"><span class="prompt">PS C:\Users\anis&gt;</span> $aclDog = Get-Acl -Path "$aclPath\Dog.txt"
+Set-Acl -Path "$aclPath\Cat.txt" -AclObject $aclDog
+(Get-Acl "$aclPath\Cat.txt").Access | ForEach-Object {
+    $_ | Format-List IdentityReference, FileSystemRights, AccessControlType
+}</pre>
+</div>
+</div>
+</div>
+<div class="subsection-block">
+<h4 class="subsection-title">Ajouter une règle d’accès sur votre propre dossier</h4>
+<div class="subsection-body">
+<div class="codewrap">
+<div class="codebar">
+<span class="codelabel">Commande à taper</span>
+<button class="copybtn" data-copy-target="p7-cmd3" type="button">Copier</button>
+</div>
+<pre class="shell" id="p7-cmd3"><span class="prompt">PS C:\Users\anis&gt;</span> $acl = Get-Acl "$aclPath\Docs"
+$utilisateur = "$env:USERDOMAIN\$env:USERNAME"
+$droit = [System.Security.AccessControl.FileSystemRights]::ReadAndExecute
+$type = [System.Security.AccessControl.AccessControlType]::Allow
+$nouvelleRegle = New-Object System.Security.AccessControl.FileSystemAccessRule($utilisateur, $droit, $type)
+$acl.AddAccessRule($nouvelleRegle)
+Set-Acl -Path "$aclPath\Docs" -AclObject $acl
+(Get-Acl "$aclPath\Docs").Access | ForEach-Object {
+    $_ | Format-List IdentityReference, FileSystemRights, AccessControlType
+}</pre>
+</div>
+<div class="callout spaced-block">
+<strong>Rappel :</strong> si votre poste refuse cette dernière modification, gardez tout de même une capture du message affiché puis passez à la partie suivante. La consultation et la copie d’ACL restent les deux opérations minimales obligatoires.
+                </div>
+</div>
+</div>
+<div class="proof callout spaced-block" data-proof-id="p7-s1-proof">
+<div class="proof-head">
+<div>
+<strong>Capture obligatoire :</strong> montrez la consultation d’ACL avec <strong>Get-Acl</strong> et, si possible, la règle ajoutée ou la copie des permissions appliquée.
+                </div>
+</div>
+<div class="proof-body" tabindex="0" title="Cliquez ici puis collez une image depuis le presse-papiers avec Ctrl+V"><div class="proofEmpty"><button class="btnCapture proofInsertLink" type="button">Insérer</button> ici la capture de la consultation d’ACL avec Get-Acl et la règle ajoutée ou la copie des permissions.<div class="proofPasteHint">ou collez une image enregistrée dans le presse-papiers avec Ctrl+V.</div></div><img alt="Capture de l’étudiant" class="proofImg"/><input accept="image/*" class="proofFile" hidden="" type="file"/><div class="proofBodyActions"><button class="btnClear proofRemoveLink" type="button">retirer la capture</button></div></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="part" id="partie-8">
+<div class="part-header">
+<h2 class="part-title">Partie 8 — bilan final</h2>
+</div>
+<div class="part-body">
+<div class="section-block line-section">
+<h3 class="section-title" id="p8-s1">Vérification de fin de labo</h3>
+<div class="section-body">
+<p>Avant l’export PDF, vérifiez que vous avez bien réalisé l’ensemble du parcours demandé.</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Élément attendu</th>
+<th>Ce que vous devez voir</th>
+<th>État</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dossier de labo</td>
+<td>Le dossier <strong>PS_Cours7_Lab</strong> et ses sous-dossiers sont présents.</td>
+<td>À vérifier</td>
+</tr>
+<tr>
+<td>Journal texte</td>
+<td><strong>journal.txt</strong> contient plusieurs lignes créées avec Set-Content et Add-Content.</td>
+<td>À vérifier</td>
+</tr>
+<tr>
+<td>Recherche et tri</td>
+<td>Vous avez obtenu des résultats avec <strong>-Filter</strong>, <strong>Where-Object</strong> et <strong>Sort-Object</strong>.</td>
+<td>À vérifier</td>
+</tr>
+<tr>
+<td>Doublons</td>
+<td>Le fichier <strong>Duplicates.txt</strong> existe et la simulation <strong>-WhatIf</strong> a été testée.</td>
+<td>À vérifier</td>
+</tr>
+<tr>
+<td>Rangement automatique</td>
+<td>Le dossier <strong>06_A_organiser</strong> contient des sous-dossiers par extension.</td>
+<td>À vérifier</td>
+</tr>
+<tr>
+<td>ACL</td>
+<td>Vous avez au minimum consulté les permissions avec <strong>Get-Acl</strong>.</td>
+<td>À vérifier</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="card" id="export">
+<h2>Exporter en PDF</h2>
+<ul class="list">
+<li>Vérifiez que toutes les captures obligatoires sont visibles dans la page.</li>
+<li>Vérifiez que vos réponses rédigées sont complètes et lisibles.</li>
+<li>Cliquez sur <strong>Exporter en PDF</strong>, puis choisissez <strong>Enregistrer en PDF</strong>.</li>
+<li>Remettez ensuite le fichier PDF selon la consigne donnée.</li>
+</ul>
+<div aria-label="Export" class="exportbar exportbar-spaced render-export">
+<button class="actionbtn" id="exportPdf" type="button">Exporter en PDF</button>
+</div>
+<div class="callout spaced-block export-callout">
+<strong>Important :</strong> si une capture, une réponse ou une information n’apparaît pas dans la page avant l’export, elle ne sera pas dans le PDF.
+      </div>
+</section>
+<footer class="course-footer">
+<div class="course-footer-left">Version 2026</div>
+<div class="course-footer-right">© <a class="footer-author-link" href="droits.html">Anis Ghaieb</a> — Support pédagogique original — Tous droits réservés</div>
+</footer>
+</main>
+</body>
+</html>
